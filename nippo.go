@@ -17,7 +17,6 @@ func submitHandler(res http.ResponseWriter, req *http.Request) {
 	// DB operation
 }
 
-// Ref: https://gist.github.com/niratama/6b0117c6c6f2d21b5687
 func serve() {
 	fs := http.FileServer(http.Dir("./static/html/"))
 	http.Handle("/", fs)
