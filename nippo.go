@@ -12,13 +12,15 @@ func main() {
 }
 
 func submitHandler(res http.ResponseWriter, req *http.Request) {
-	// Called twice
+	nippo := req.FormValue("nippo")
+	log.Println(nippo)
 	// DB operation
 }
 
 // Ref: https://gist.github.com/niratama/6b0117c6c6f2d21b5687
 func serve() {
-	http.Handle("/", http.FileServer(http.Dir("./static/html")))
+	fs := http.FileServer(http.Dir("./static/html/"))
+	http.Handle("/", fs)
 	http.HandleFunc("/submit.html", submitHandler)
 	listen := make(chan bool)
 	go func() {
