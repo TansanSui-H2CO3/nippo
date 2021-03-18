@@ -5,7 +5,20 @@
     <body>
         <h1>nippo</h1>
         <form action="/submit.html" method="POST">
-            <input type="text" name="nippo">
+            <h2>日付</h2>
+            <input type="date" name="date">
+            
+            <h2>前日までのタスク(達成したものにチェック)</h2>
+            <div id="task">
+                <input type="checkbox" name="task-1" value=1>
+            </div>
+            
+            <h2>日報</h2>
+            <textarea name="nippo" id="" cols="50" rows="30"></textarea>
+
+            <h2>新しくできたタスク(カンマ区切り)</h2>
+            <textarea name="new-task" id="" cols="50" rows="10"></textarea>
+
             <input type="submit" value="post">
         </form>
     </body>
