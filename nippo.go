@@ -7,6 +7,7 @@ import (
 	"net/http"
 
 	"github.com/skratchdot/open-golang/open"
+	"package.local/database"
 )
 
 func main() {
@@ -18,6 +19,7 @@ func submitHandler(res http.ResponseWriter, req *http.Request) {
 	log.Println(nippo)
 	fmt.Fprint(res, readFile("submit.html"))
 	// DB operation
+	database.Operate()
 }
 
 // Read any files in ./root/
