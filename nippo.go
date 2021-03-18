@@ -19,7 +19,16 @@ func submitHandler(res http.ResponseWriter, req *http.Request) {
 	log.Println(nippo)
 	fmt.Fprint(res, readFile("submit.html"))
 	// DB operation
-	database.Operate()
+	if req.FormValue("date") != "" {
+		var arr []string = []string{"Sample", "Values"}
+		database.Write(
+			req.FormValue("date"),
+			arr,
+			req.FormValue("nippo"),
+			arr,
+			arr,
+		)
+	}
 }
 
 // Read any files in ./root/
