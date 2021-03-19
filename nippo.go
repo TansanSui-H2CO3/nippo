@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"html/template"
 	"io/ioutil"
 	"log"
 	"net/http"
@@ -31,6 +32,17 @@ func submitHandler(res http.ResponseWriter, req *http.Request) {
 	}
 }
 
+// Test function of html/template
+func templateHandler(res http.ResponseWriter, req *http.Request) {
+	var tplt *template.Template
+	tplt = template.Must(template.ParseFiles("./root/template.html"))
+	age := 256
+	err := tplt.Execute(res, age)
+	if err != nil {
+		panic(err.Error())
+	}
+}
+
 // Read any files in ./root/
 func readFile(fileName string) string {
 	bytes, err := ioutil.ReadFile("./root/" + fileName)
@@ -45,6 +57,7 @@ func serve() {
 	http.Handle("/", http.FileServer(http.Dir("./root/")))
 	http.Handle("/assets/", http.StripPrefix("/assets/", http.FileServer(http.Dir("./assets")))) // Imprt files in assets
 	http.HandleFunc("/submit.html", submitHandler)
+	http.HandleFunc("/template", templateHandler)
 	listen := make(chan bool)
 	go func() {
 		<-listen
