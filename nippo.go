@@ -34,8 +34,7 @@ func submitHandler(res http.ResponseWriter, req *http.Request) {
 
 // Test function of html/template
 func templateHandler(res http.ResponseWriter, req *http.Request) {
-	var tplt *template.Template
-	tplt = template.Must(template.ParseFiles("./root/template.html"))
+	tplt := template.Must(template.ParseFiles("./root/template.html"))
 	age := 256
 	err := tplt.Execute(res, age)
 	if err != nil {
