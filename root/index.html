@@ -13,13 +13,19 @@
                 <input type="checkbox" name="task-1" value=1>
             </div>
             
-            <h2>日報</h2>
+            <h2>日報(やったこと)</h2>
             <textarea name="nippo" id="" cols="50" rows="30"></textarea>
 
-            <h2>新しくできたタスク(カンマ区切り)</h2>
-            <textarea name="new-task" id="" cols="50" rows="10"></textarea>
+            <h2>新しいタスク</h2>
+            <div id="new-task-operator">
+                <input type="text" name="number-of-new-tasks" value="0" id="number-of-new-tasks" readonly>
+                <button type="button" onclick="addNewTask();">Add a new task</button>
+            </div>
+            
+            <div id="new-task-editor"></div>
 
             <input type="submit" value="post">
         </form>
     </body>
+    <script src="/assets/js/index.js"></script>
 </html>

@@ -6,6 +6,7 @@ import (
 	"io/ioutil"
 	"log"
 	"net/http"
+	"strconv"
 
 	"github.com/skratchdot/open-golang/open"
 	"package.local/database"
@@ -16,9 +17,19 @@ func main() {
 }
 
 func submitHandler(res http.ResponseWriter, req *http.Request) {
-	nippo := req.FormValue("nippo")
-	log.Println(nippo)
+	// Response to the client
 	fmt.Fprint(res, readFile("submit.html"))
+
+	// Prepare an array of new tasks
+	var number_of_new_task int
+	number_of_new_task, _ = strconv.Atoi(req.FormValue("number-of-new-tasks"))
+	var new_task []string
+	var deadline []string
+	for i := 1; i <= number_of_new_task; i++ {
+		new_task = append(new_task, req.FormValue("new-task-"+strconv.Itoa(i)))
+		deadline = append(deadline, req.FormValue("deadline-"+strconv.Itoa(i)))
+	}
+
 	// DB operation
 	if req.FormValue("date") != "" {
 		var arr []string = []string{"Sample", "Values"}
@@ -26,8 +37,8 @@ func submitHandler(res http.ResponseWriter, req *http.Request) {
 			req.FormValue("date"),
 			arr,
 			req.FormValue("nippo"),
-			arr,
-			arr,
+			new_task,
+			deadline,
 		)
 	}
 }
