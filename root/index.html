@@ -9,8 +9,12 @@
             <input type="date" name="date">
             
             <h2>前日までのタスク(達成したものにチェック)</h2>
-            <div id="task">
-                <input type="checkbox" name="task-1" value=1>
+            <div id="pre-task">
+                {{range .}}
+                    <div>
+                        <input type="checkbox" name="task-1" value=1>{{.Detail}}
+                    </div>
+                {{end}}
             </div>
             
             <h2>日報(やったこと)</h2>

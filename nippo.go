@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"html/template"
 	"io/ioutil"
 	"log"
@@ -16,9 +15,22 @@ func main() {
 	serve()
 }
 
+func indexHandler(res http.ResponseWriter, req *http.Request) {
+	// Response to the client
+	index_page := template.Must(template.ParseFiles("./root/index.html"))
+	err := index_page.Execute(res, database.GetTask())
+	if err != nil {
+		panic(err.Error())
+	}
+}
+
 func submitHandler(res http.ResponseWriter, req *http.Request) {
 	// Response to the client
-	fmt.Fprint(res, readFile("submit.html"))
+	submit_page := template.Must(template.ParseFiles("./root/submit.html"))
+	err := submit_page.Execute(res, nil)
+	if err != nil {
+		panic(err.Error())
+	}
 
 	// Prepare an array of new tasks
 	var number_of_new_task int
@@ -64,8 +76,9 @@ func readFile(fileName string) string {
 }
 
 func serve() {
-	http.Handle("/", http.FileServer(http.Dir("./root/")))
+	// http.Handle("/", http.FileServer(http.Dir("./root/")))
 	http.Handle("/assets/", http.StripPrefix("/assets/", http.FileServer(http.Dir("./assets")))) // Imprt files in assets
+	http.HandleFunc("/", indexHandler)
 	http.HandleFunc("/submit.html", submitHandler)
 	http.HandleFunc("/template", templateHandler)
 	listen := make(chan bool)
