@@ -36,3 +36,4 @@ create table nippo.task (
 - [Goでwebアプリを開発してみよう](https://www.slideshare.net/takuyaueda967/goweb-69949279)
 - [[Golang] ファイル読み込みサンプル](https://qiita.com/tchnkmr/items/b686adc4a7e144d48755)
 - [GolangでHTMLのtemplateに値を渡す方法](https://qiita.com/tetsuzawa/items/0d043ad76b9705cdbb79)
+- [GoでMySQLを利用する](https://noumenon-th.net/programming/2019/09/20/go-sql-driver/)
