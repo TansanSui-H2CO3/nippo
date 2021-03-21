@@ -35,9 +35,11 @@ func submitHandler(res http.ResponseWriter, req *http.Request) {
 	// Prepare an array of new tasks
 	var number_of_new_task int
 	number_of_new_task, _ = strconv.Atoi(req.FormValue("number-of-new-tasks"))
+	var task_title []string
 	var new_task []string
 	var deadline []string
 	for i := 1; i <= number_of_new_task; i++ {
+		task_title = append(task_title, req.FormValue("title-"+strconv.Itoa(i)))
 		new_task = append(new_task, req.FormValue("new-task-"+strconv.Itoa(i)))
 		deadline = append(deadline, req.FormValue("deadline-"+strconv.Itoa(i)))
 	}
@@ -49,6 +51,7 @@ func submitHandler(res http.ResponseWriter, req *http.Request) {
 			req.FormValue("date"),
 			arr,
 			req.FormValue("nippo"),
+			task_title,
 			new_task,
 			deadline,
 		)

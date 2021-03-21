@@ -22,6 +22,11 @@ function addNewTask() {
     new_input.name = 'deadline-' + id_number;
     document.getElementById('new-task-' + id_number).appendChild(new_input);
 
+    let new_title = document.createElement('input');
+    new_title.type = 'text';
+    new_title.name = 'title-' + id_number;
+    document.getElementById('new-task-' + id_number).appendChild(new_title);
+
     let new_textarea = document.createElement('textarea');
     new_textarea.name = 'new-task-' + id_number;
     new_textarea.cols = 50;
