@@ -9,6 +9,28 @@
 |完了した作業||
 |明日の作業||
 
+## Database構造
+### `nippo`
+```sql
+create table nippo.nippo (
+    id int not null primary key auto_increment,
+    date varchar(20),
+    content varchar(5000)
+);
+```
+
+### `task`
+```sql
+create table nippo.task (
+    id int not null primary key auto_increment,
+    title varchar(50),
+    content varchar(1000),
+    created_date varchar(20),
+    deadline_date varchar(20),
+    done_date varchar(20)
+);
+```
+
 ## References
 - [goでhttpサーバ起動と同時にブラウザを開く例](https://gist.github.com/niratama/6b0117c6c6f2d21b5687)
 - [Goでwebアプリを開発してみよう](https://www.slideshare.net/takuyaueda967/goweb-69949279)
