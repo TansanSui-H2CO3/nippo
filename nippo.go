@@ -2,7 +2,6 @@ package main
 
 import (
 	"html/template"
-	"io/ioutil"
 	"log"
 	"net/http"
 	"strconv"
@@ -58,32 +57,11 @@ func submitHandler(res http.ResponseWriter, req *http.Request) {
 	}
 }
 
-// Test function of html/template
-func templateHandler(res http.ResponseWriter, req *http.Request) {
-	tplt := template.Must(template.ParseFiles("./root/template.html"))
-	age := 256
-	err := tplt.Execute(res, age)
-	if err != nil {
-		panic(err.Error())
-	}
-}
-
-// Read any files in ./root/
-func readFile(fileName string) string {
-	bytes, err := ioutil.ReadFile("./root/" + fileName)
-	if err != nil {
-		panic(err)
-	}
-
-	return string(bytes)
-}
-
 func serve() {
 	// http.Handle("/", http.FileServer(http.Dir("./root/")))
 	http.Handle("/assets/", http.StripPrefix("/assets/", http.FileServer(http.Dir("./assets")))) // Imprt files in assets
 	http.HandleFunc("/", indexHandler)
 	http.HandleFunc("/submit.html", submitHandler)
-	http.HandleFunc("/template", templateHandler)
 	listen := make(chan bool)
 	go func() {
 		<-listen
