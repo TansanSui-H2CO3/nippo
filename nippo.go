@@ -17,7 +17,8 @@ func main() {
 func indexHandler(res http.ResponseWriter, req *http.Request) {
 	// Response to the client
 	index_page := template.Must(template.ParseFiles("./root/index.html"))
-	err := index_page.Execute(res, database.GetTask())
+	task, _ := database.GetTask()
+	err := index_page.Execute(res, task)
 	if err != nil {
 		panic(err.Error())
 	}
@@ -29,6 +30,15 @@ func submitHandler(res http.ResponseWriter, req *http.Request) {
 	err := submit_page.Execute(res, nil)
 	if err != nil {
 		panic(err.Error())
+	}
+
+	// Prepare an array of finished tasks' ID
+	_, task_id := database.GetTask()
+	var finished_task_id []int
+	for i := 0; i < len(task_id); i++ {
+		if req.FormValue("task-"+strconv.Itoa(task_id[i])) == "1" {
+			finished_task_id = append(finished_task_id, task_id[i])
+		}
 	}
 
 	// Prepare an array of new tasks
@@ -45,10 +55,9 @@ func submitHandler(res http.ResponseWriter, req *http.Request) {
 
 	// DB operation
 	if req.FormValue("date") != "" {
-		var arr []string = []string{"Sample", "Values"}
 		database.Write(
 			req.FormValue("date"),
-			arr,
+			finished_task_id,
 			req.FormValue("nippo"),
 			task_title,
 			new_task,
