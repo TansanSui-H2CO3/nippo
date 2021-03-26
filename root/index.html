@@ -12,7 +12,7 @@
             <div id="pre-task">
                 {{range .}}
                     <div>
-                        <input type="checkbox" name="task-{{.ID}}" value="1">{{.Title}} -> {{.Content}}
+                        <input type="checkbox" name="task-{{.ID}}" value="1">[{{.Deadline_date}}] {{.Title}} -> {{.Content}}
                     </div>
                 {{end}}
             </div>
