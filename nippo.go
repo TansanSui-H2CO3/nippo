@@ -66,11 +66,26 @@ func submitHandler(res http.ResponseWriter, req *http.Request) {
 	}
 }
 
+func viewerHandler(res http.ResponseWriter, req *http.Request) {
+	target_date := req.FormValue("target_date")
+
+	// Get data in DB
+	nippo := database.GetNippo(target_date)
+
+	// Return page information
+	viewer_page := template.Must(template.ParseFiles("./root/viewer.html"))
+	err := viewer_page.Execute(res, nippo)
+	if err != nil {
+		panic(err.Error())
+	}
+}
+
 func serve() {
 	// http.Handle("/", http.FileServer(http.Dir("./root/")))
 	http.Handle("/assets/", http.StripPrefix("/assets/", http.FileServer(http.Dir("./assets")))) // Imprt files in assets
 	http.HandleFunc("/", indexHandler)
 	http.HandleFunc("/submit.html", submitHandler)
+	http.HandleFunc("/viewer.html", viewerHandler)
 	listen := make(chan bool)
 	go func() {
 		<-listen
