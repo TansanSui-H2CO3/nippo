@@ -70,20 +70,13 @@ func viewerHandler(res http.ResponseWriter, req *http.Request) {
 	target_date := req.FormValue("target_date")
 
 	// Get data in DB
-	nippo, err := database.GetNippo(target_date)
+	nippo := database.GetNippo(target_date)
 
 	// Return page information
 	viewer_page := template.Must(template.ParseFiles("./root/viewer.html"))
+	err := viewer_page.Execute(res, nippo)
 	if err != nil {
-		err := viewer_page.Execute(res, nippo)
-		if err != nil {
-			panic(err.Error())
-		}
-	} else {
-		err := viewer_page.Execute(res, nil)
-		if err != nil {
-			panic(err.Error())
-		}
+		panic(err.Error())
 	}
 
 }
